@@ -1,28 +1,36 @@
-// 更新时间: 2026-01-20 07:29
 var NEWS = [
   {
     "id": 1,
+    "title": "贝克汉姆长子发长文控诉父母",
+    "desc": "百度热搜话题 - 点击查看详情",
+    "hot": 7238593,
+    "src": "百度热搜",
+    "isHot": true,
+    "url": "https://www.baidu.com/s?wd=%E8%B4%9D%E5%85%8B%E6%B1%89%E5%A7%86%E9%95%BF%E5%AD%90%E5%8F%91%E9%95%BF%E6%96%87%E6%8E%A7%E8%AF%89%E7%88%B6%E6%AF%8D"
+  },
+  {
+    "id": 2,
     "title": "癌症妈妈碰瓷筹钱 儿子怒斥别害人",
     "desc": "百度热搜话题 - 点击查看详情",
-    "hot": 6943998,
+    "hot": 6857572,
     "src": "百度热搜",
     "isHot": true,
     "url": "https://www.baidu.com/s?wd=%E7%99%8C%E7%97%87%E5%A6%88%E5%A6%88%E7%A2%B0%E7%93%B7%E7%AD%B9%E9%92%B1%20%E5%84%BF%E5%AD%90%E6%80%92%E6%96%A5%E5%88%AB%E5%AE%B3%E4%BA%BA"
   },
   {
-    "id": 2,
+    "id": 3,
     "title": "刚出生宝宝闻到妈妈味道后瞬间安静",
     "desc": "百度热搜话题 - 点击查看详情",
-    "hot": 6096850,
+    "hot": 6273881,
     "src": "百度热搜",
     "isHot": true,
     "url": "https://www.baidu.com/s?wd=%E5%88%9A%E5%87%BA%E7%94%9F%E5%AE%9D%E5%AE%9D%E9%97%BB%E5%88%B0%E5%A6%88%E5%A6%88%E5%91%B3%E9%81%93%E5%90%8E%E7%9E%AC%E9%97%B4%E5%AE%89%E9%9D%99"
   },
   {
-    "id": 3,
+    "id": 4,
     "title": "广东汕头通报“恶狗撕咬女生”",
     "desc": "百度热搜话题 - 点击查看详情",
-    "hot": 3709662,
+    "hot": 3516138,
     "src": "百度热搜",
     "isHot": true,
     "url": "https://www.baidu.com/s?wd=%E5%B9%BF%E4%B8%9C%E6%B1%95%E5%A4%B4%E9%80%9A%E6%8A%A5%E2%80%9C%E6%81%B6%E7%8B%97%E6%92%95%E5%92%AC%E5%A5%B3%E7%94%9F%E2%80%9D"
