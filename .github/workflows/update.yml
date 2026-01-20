@@ -1,0 +1,24 @@
+name: 更新女性议题新闻
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: 运行爬虫
+      run: python scraper.py
+    
+    - name: 提交更新
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add news_data.js
+        git diff --quiet && git diff --staged --quiet || git commit -m "更新新闻数据"
+        git push
