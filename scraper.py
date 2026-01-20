@@ -45,9 +45,9 @@ def main():
     if len(all_news) == 0:
         all_news = [{'id':1, 'title':'暂无女性相关热点', 'desc':'请稍后刷新', 'hot':0, 'src':'系统', 'isHot':False, 'url':'https://weibo.com'}]
     
-    output = "var NEWS = " + json.dumps(all_news[:20], ensure_ascii=False, indent=2) + ";"
+    output = json.dumps(all_news[:20], ensure_ascii=False)
     
-    with open('news_data.js', 'w', encoding='utf-8') as f:
+    with open('news_data.json', 'w', encoding='utf-8') as f:
         f.write(output)
     
     print(f"成功抓取 {len(all_news)} 条新闻")
