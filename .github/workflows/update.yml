@@ -19,6 +19,6 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add news_data.js
+        git add news_data.json
         git diff --quiet && git diff --staged --quiet || git commit -m "更新新闻数据"
         git push
