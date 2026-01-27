@@ -1,42 +1,46 @@
 import json
 import urllib.request
-import urllib.parse
 import re
-from datetime import datetime
 
-def fetch_baidu_hot():
+def fetch_weibo_hot():
     news = []
-    keywords = ['女', '妈', '母', '妻', '家暴', '性别', '歧视', '生育', '产假', '性骚扰', '独居', '安全']
+    keywords = ['女', '妈', '母', '妻', '家暴', '性别', '歧视', '生育', '产假', '性骚扰', '独居', '安全', '姐', '妹', '她', '闺蜜', '婆婆', '丈夫', '男友', '女友', '离婚', '出轨', '孕', '宝宝']
     
     try:
-        url = 'https://top.baidu.com/board?tab=realtime'
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
-        response = urllib.request.urlopen(req, timeout=10)
-        html = response.read().decode('utf-8')
+        url = 'https://weibo.com/ajax/side/hotSearch'
+        req = urllib.request.Request(url, headers={
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'Referer': 'https://weibo.com'
+        })
+        response = urllib.request.urlopen(req, timeout=15)
+        data = json.loads(response.read().decode('utf-8'))
         
-        pattern = r'"word":"(.*?)".*?"hotScore":"(\d+)"'
-        matches = re.findall(pattern, html)
+        realtime = data.get('data', {}).get('realtime', [])
         
-        for word, score in matches:
+        for item in realtime:
+            word = item.get('word', '')
             for kw in keywords:
                 if kw in word:
                     news.append({
                         'id': len(news) + 1,
                         'title': word,
-                        'desc': '百度热搜话题 - 点击查看详情',
-                        'hot': int(score),
-                        'src': '百度热搜',
-                        'isHot': int(score) > 500000,
-                        'url': 'https://www.baidu.com/s?wd=' + urllib.parse.quote(word)
+                        'desc': '微博热搜 - 点击查看详情',
+                        'hot': item.get('num', 0),
+                        'src': '微博热搜',
+                        'isHot': item.get('is_hot', 0) == 1,
+                        'url': 'https://s.weibo.com/weibo?q=' + urllib.parse.quote(word)
                     })
                     break
+                    
     except Exception as e:
-        print(f"百度抓取失败: {e}")
+        print(f"微博抓取失败: {e}")
     
     return news
 
 def main():
-    all_news = fetch_baidu_hot()
+    import urllib.parse
+    
+    all_news = fetch_weibo_hot()
     all_news.sort(key=lambda x: x['hot'], reverse=True)
     
     for i, item in enumerate(all_news):
