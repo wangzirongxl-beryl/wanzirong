@@ -23,7 +23,7 @@ def fetch_weibo():
                     news.append({
                         'title': word,
                         'desc': '微博热搜',
-                        'hot': item.get('num', 0),
+                        'hot': int(item.get('num', 0) or 0),
                         'src': '微博',
                         'isHot': item.get('is_hot', 0) == 1,
                         'url': 'https://s.weibo.com/weibo?q=' + urllib.parse.quote(word)
@@ -31,36 +31,6 @@ def fetch_weibo():
                     break
     except Exception as e:
         print(f"微博抓取失败: {e}")
-    return news
-
-def fetch_zhihu():
-    news = []
-    try:
-        url = 'https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=50'
-        req = urllib.request.Request(url, headers={
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        })
-        response = urllib.request.urlopen(req, timeout=15)
-        data = json.loads(response.read().decode('utf-8'))
-        
-        for item in data.get('data', []):
-            target = item.get('target', {})
-            title = target.get('title', '')
-            for kw in keywords:
-                if kw in title:
-                    hot_text = item.get('detail_text', '0')
-                    hot_num = re.sub(r'[^\d]', '', hot_text) or '0'
-                    news.append({
-                        'title': title,
-                        'desc': '知乎热榜',
-                        'hot': int(hot_num) * (10000 if '万' in hot_text else 1),
-                        'src': '知乎',
-                        'isHot': True,
-                        'url': 'https://www.zhihu.com/question/' + str(target.get('id', ''))
-                    })
-                    break
-    except Exception as e:
-        print(f"知乎抓取失败: {e}")
     return news
 
 def fetch_toutiao():
@@ -80,7 +50,7 @@ def fetch_toutiao():
                     news.append({
                         'title': title,
                         'desc': '今日头条',
-                        'hot': item.get('HotValue', 0),
+                        'hot': int(item.get('HotValue', 0) or 0),
                         'src': '头条',
                         'isHot': True,
                         'url': item.get('Url', 'https://www.toutiao.com')
@@ -88,34 +58,6 @@ def fetch_toutiao():
                     break
     except Exception as e:
         print(f"头条抓取失败: {e}")
-    return news
-
-def fetch_douyin():
-    news = []
-    try:
-        url = 'https://www.douyin.com/aweme/v1/web/hot/search/list/'
-        req = urllib.request.Request(url, headers={
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            'Referer': 'https://www.douyin.com'
-        })
-        response = urllib.request.urlopen(req, timeout=15)
-        data = json.loads(response.read().decode('utf-8'))
-        
-        for item in data.get('data', {}).get('word_list', []):
-            word = item.get('word', '')
-            for kw in keywords:
-                if kw in word:
-                    news.append({
-                        'title': word,
-                        'desc': '抖音热搜',
-                        'hot': item.get('hot_value', 0),
-                        'src': '抖音',
-                        'isHot': True,
-                        'url': 'https://www.douyin.com/search/' + urllib.parse.quote(word)
-                    })
-                    break
-    except Exception as e:
-        print(f"抖音抓取失败: {e}")
     return news
 
 def fetch_bilibili():
@@ -135,7 +77,7 @@ def fetch_bilibili():
                     news.append({
                         'title': word,
                         'desc': 'B站热搜',
-                        'hot': item.get('heat_score', 0),
+                        'hot': int(item.get('heat_score', 0) or 0),
                         'src': 'B站',
                         'isHot': True,
                         'url': 'https://search.bilibili.com/all?keyword=' + urllib.parse.quote(word)
@@ -148,9 +90,7 @@ def fetch_bilibili():
 def main():
     all_news = []
     all_news.extend(fetch_weibo())
-    all_news.extend(fetch_zhihu())
     all_news.extend(fetch_toutiao())
-    all_news.extend(fetch_douyin())
     all_news.extend(fetch_bilibili())
     
     all_news.sort(key=lambda x: x['hot'], reverse=True)
