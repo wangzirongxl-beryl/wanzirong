@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>body{margin:0;padding:20px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:15px;padding:10px 22px;border-radius:2px;cursor:pointer;border:1px solid transparent;transition:all var(--dur-base) var(--ease-out)}
+.btn-primary{background:var(--terracotta);color:var(--cream);border-color:var(--terracotta)}
+.btn-primary:hover{background:var(--terracotta-2);border-color:var(--terracotta-2)}
+.btn-secondary{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn-secondary:hover{background:var(--rose-taupe-3);}
+.btn-ghost{background:transparent;color:var(--ink-2);border:none; padding-left:4px; padding-right:4px}
+.btn-ghost:hover{color:var(--terracotta)}
+.btn-pill{background:var(--terracotta);color:var(--cream);border-radius:999px;padding:12px 28px;border:none}
+.flourish{font-family:Georgia,serif; font-style: italic; color:var(--terracotta); font-size:18px; margin-left:6px}
+</style></head>
+<body>
+<div class="eyebrow" style="margin-bottom:12px">Buttons</div>
+<div class="row">
+  <button class="btn btn-primary">Read the essay</button>
+  <button class="btn btn-secondary">Subscribe</button>
+  <button class="btn btn-ghost">← Back</button>
+  <button class="btn btn-pill">Join the letter</button>
+  <span class="flourish">read more →</span>
+</div>
+<p class="meta" style="font-size:12px; margin-top:14px;">Press: 80ms opacity → 0.85. No scale. Primary uses terracotta once per screen.</p>
+</body></html>

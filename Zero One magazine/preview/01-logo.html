@@ -1,0 +1,36 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  body { margin: 0; padding: 24px; background: #F1ECE4; font-family: Georgia, 'Times New Roman', serif; color: #4E4A44; }
+  .card { display: flex; gap: 20px; align-items: stretch; }
+  .logo-big { flex: 0 0 auto; }
+  .logo-big object { width: 360px; height: 100px; pointer-events: none; }
+  .right { display: flex; flex-direction: column; justify-content: center; gap: 10px; border-left: 1px solid #C8BFB2; padding-left: 20px; }
+  .mono { width: 56px; height: 56px; }
+  .row { display: flex; align-items: center; gap: 12px; }
+  .eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #8A8378; font-style: italic; }
+  .meta { font-size: 13px; color: #6E6A62; font-style: italic; }
+  .swatch-row { display: flex; gap: 6px; margin-top: 4px; }
+  .sw { width: 22px; height: 22px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.04); }
+</style></head>
+<body>
+<div class="card">
+  <div class="logo-big">
+    <object data="../assets/logo/wordmark.svg" type="image/svg+xml"></object>
+  </div>
+  <div class="right">
+    <div class="row">
+      <img src="../assets/logo/monogram.svg" class="mono" alt=""/>
+      <span class="meta">Monogram · avatar / seal</span>
+    </div>
+    <div class="eyebrow">Wordmark · Georgia italic</div>
+    <div class="swatch-row">
+      <div class="sw" style="background:#6E6A62" title="Ink"></div>
+      <div class="sw" style="background:#A89A8C" title="Warm stone"></div>
+      <div class="sw" style="background:#B9A89A" title="Rose taupe"></div>
+      <div class="sw" style="background:#C8BFB2" title="Sand"></div>
+      <div class="sw" style="background:#F1ECE4" title="Paper"></div>
+    </div>
+  </div>
+</div>
+</body></html>

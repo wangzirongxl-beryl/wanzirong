@@ -1,0 +1,20 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>body{margin:0;padding:20px}
+.links{display:flex; flex-direction:column; gap:10px; max-width:280px; font-family:Georgia,serif; font-size:17px; font-style: italic;}
+a.s0{color:var(--terracotta); background-image:none; background-size:0 1px;}
+a.s1{color:var(--terracotta); background-image:linear-gradient(var(--terracotta),var(--terracotta)); background-size:50% 1px; background-position:0 100%; background-repeat:no-repeat}
+a.s2{color:var(--terracotta); background-image:linear-gradient(var(--terracotta),var(--terracotta)); background-size:100% 1px; background-position:0 100%; background-repeat:no-repeat}
+a.s3{color:var(--terracotta-2); opacity:0.85}
+.lbl{font-family:ui-monospace,monospace; font-size:11px; color:var(--ink-3); margin-left:12px; font-style:normal}
+.row{display:flex; align-items:center}
+</style></head>
+<body>
+<div class="eyebrow" style="margin-bottom:12px">Link states · underline grows left → right</div>
+<div class="links">
+  <div class="row"><a class="s0" href="#">Read the profile</a><span class="lbl">rest</span></div>
+  <div class="row"><a class="s1" href="#">Read the profile</a><span class="lbl">hover · mid</span></div>
+  <div class="row"><a class="s2" href="#">Read the profile</a><span class="lbl">hover · full</span></div>
+  <div class="row"><a class="s3" href="#">Read the profile</a><span class="lbl">press · 0.85 opacity</span></div>
+</div>
+</body></html>

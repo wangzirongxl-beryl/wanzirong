@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Zero One Magazine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&display=swap"/>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<link rel="stylesheet" href="site.css"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/logo/monogram.svg"/>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="articles.js"></script>
+<script type="text/babel" src="Header.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel" src="Hero.jsx"></script>
+<script type="text/babel" src="ArticleCard.jsx"></script>
+<script type="text/babel" src="NewsletterCard.jsx"></script>
+<script type="text/babel" src="ProfileHeader.jsx"></script>
+<script type="text/babel" src="ArticleBody.jsx"></script>
+<script type="text/babel" src="ArchiveFilters.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+function App() {
+  const saved = (() => { try { return JSON.parse(sessionStorage.getItem('zo-nav') || '{}'); } catch { return {}; } })();
+  const [route, setRoute] = useState(saved.route || { page: 'home' });
+  const [filter, setFilter] = useState('all');
+
+  useEffect(() => {
+    sessionStorage.setItem('zo-nav', JSON.stringify({ route }));
+  }, [route]);
+
+  const onNav = (id) => {
+    if (id === 'home') setRoute({ page: 'home' });
+    else if (id === 'profiles') { setRoute({ page: 'archive' }); setFilter('profile'); }
+    else if (id === 'essays')   { setRoute({ page: 'archive' }); setFilter('essay'); }
+    else if (id === 'archive')  { setRoute({ page: 'archive' }); setFilter('all'); }
+    else if (id === 'about')    setRoute({ page: 'about' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const openArticle = (id) => {
+    if (id === 'latest') id = window.ARTICLES[0].id;
+    if (id === 'archive') { setRoute({ page: 'archive' }); setFilter('all'); window.scrollTo({top:0,behavior:'instant'}); return; }
+    const a = window.ARTICLES.find(x => x.id === id);
+    setRoute({ page: a?.kind === 'profile' ? 'profile' : 'article', id });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const current = route.page === 'home' ? 'home'
+    : route.page === 'about' ? 'about'
+    : route.page === 'archive' ? (filter === 'profile' ? 'profiles' : filter === 'essay' ? 'essays' : 'archive')
+    : '';
+
+  return (
+    <div className="site-frame" data-screen-label={'01 ' + route.page}>
+      <Header current={current} onNav={onNav}/>
+      <main className="site-main">
+        {route.page === 'home' && <Home onOpen={openArticle}/>}
+        {route.page === 'archive' && <Archive filter={filter} onFilter={setFilter} onOpen={openArticle}/>}
+        {route.page === 'article' && <ArticlePage id={route.id} onBack={() => setRoute({page:'archive'})}/>}
+        {route.page === 'profile' && <ProfilePage id={route.id} onBack={() => setRoute({page:'archive'})}/>}
+        {route.page === 'about' && <About/>}
+      </main>
+      <Footer/>
+    </div>
+  );
+}
+
+function Home({ onOpen }) {
+  const [featured, ...rest] = window.ARTICLES;
+  return (
+    <>
+      <Hero onOpen={onOpen}/>
+
+      <div className="section-head">
+        <h2>Recent</h2>
+        <span className="flourish">what I wrote this month</span>
+      </div>
+      <div className="cards-grid">
+        <ArticleCard featured article={featured} onClick={() => onOpen(featured.id)}/>
+        {rest.slice(0,1).map(a => <ArticleCard key={a.id} article={a} onClick={() => onOpen(a.id)}/>)}
+      </div>
+      <div className="cards-grid" style={{marginTop: 24}}>
+        {rest.slice(1,4).map(a => <ArticleCard key={a.id} article={a} onClick={() => onOpen(a.id)}/>)}
+      </div>
+
+      <NewsletterCard/>
+    </>
+  );
+}
+
+function Archive({ filter, onFilter, onOpen }) {
+  const items = window.ARTICLES.filter(a => filter === 'all' || a.kind === filter);
+  return (
+    <section style={{padding: '48px 0'}}>
+      <div className="eyebrow" style={{color:'var(--clay)', marginBottom: 12}}>The Archive</div>
+      <h1 style={{fontFamily:'var(--font-display)', fontSize: 64, fontWeight: 400, letterSpacing:'-0.02em', margin:'0 0 24px', fontStyle:'italic'}}>
+        Everything I've written
+      </h1>
+      <ArchiveFilters current={filter} onChange={onFilter}/>
+      <div className="cards-grid" style={{marginTop: 24}}>
+        {items.map(a => <ArticleCard key={a.id} article={a} onClick={() => onOpen(a.id)}/>)}
+      </div>
+    </section>
+  );
+}
+
+function ArticlePage({ id, onBack }) {
+  const article = window.ARTICLES.find(a => a.id === id);
+  if (!article) return <p>Not found.</p>;
+  return (
+    <>
+      <div style={{paddingTop: 20}}>
+        <button className="ghost-link" style={{background:'none', border:'none', cursor:'pointer', padding:0}} onClick={onBack}>← all pieces</button>
+      </div>
+      <ArticleBody article={article}/>
+      <NewsletterCard/>
+    </>
+  );
+}
+
+function ProfilePage({ id, onBack }) {
+  const article = window.ARTICLES.find(a => a.id === id);
+  if (!article) return <p>Not found.</p>;
+  const person = {
+    name: article.title,
+    blurb: article.dek,
+    portrait: article.illus,
+    tags: article.tags || [],
+    lang: article.lang || 'en',
+  };
+  return (
+    <>
+      <div style={{paddingTop: 20}}>
+        <button className="ghost-link" style={{background:'none', border:'none', cursor:'pointer', padding:0}} onClick={onBack}>← all pieces</button>
+      </div>
+      <ProfileHeader person={person}/>
+      <ArticleBody article={article}/>
+    </>
+  );
+}
+
+function About() {
+  return (
+    <section style={{maxWidth: 680, margin: '0 auto', padding: '80px 0'}}>
+      <div className="eyebrow" style={{color:'var(--clay)', marginBottom:12}}>About</div>
+      <h1 style={{fontFamily:'var(--font-display)', fontSize: 56, fontWeight:400, letterSpacing:'-0.02em', margin:'0 0 24px', fontStyle:'italic'}}>
+        I write about women.
+      </h1>
+      <div className="article-body">
+        <p>I am a reporter at Zero One Magazine. I write profiles of women — writers, lawyers, scientists, the woman who runs the café on my corner — and essays about what keeps me up at night.</p>
+        <p>This site is where the rest lives. The outtakes. The longer thoughts. The names I keep coming back to.</p>
+        <div className="divider-ornament">
+          <object data="../../assets/ornaments/asterism.svg" type="image/svg+xml" style={{color:'var(--terracotta)', width:80, height:30, pointerEvents:'none'}}></object>
+        </div>
+        <p>If you want to reach me, the best way is the letter — once a month, one story. You can sign up below.</p>
+      </div>
+      <div style={{marginTop: 32}}>
+        <NewsletterCard/>
+      </div>
+    </section>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
