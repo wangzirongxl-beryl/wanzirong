@@ -8,7 +8,7 @@ function Hero({ onOpen }) {
           I write about <em>women</em>,<br/>and about the moments<br/>between us.
         </h1>
         <p className="hero-dek">
-          十年记者生涯，写下的那些人、那些事。Profiles and essays from a decade at the desk — the outtakes, the longer thoughts, the names I keep coming back to.
+          数年记者经历，写下的那些人、那些事。Profiles and essays from the desk — the outtakes, the longer thoughts, the names I keep coming back to.
         </p>
         <div className="hero-actions">
           <button className="btn btn-primary" onClick={() => onOpen && onOpen('latest')}>
