@@ -1,0 +1,18 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#F6F1E9"></rect>
+  <ellipse cx="200" cy="170" rx="150" ry="100" fill="#E3D6CB" opacity="0.55"></ellipse>
+  <g stroke="#4E4A44" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M80 170 C 75 155, 85 145, 100 148 L 160 160 C 175 163, 180 175, 175 188 L 170 215 C 168 225, 158 230, 148 228 L 95 215 C 85 212, 78 200, 80 185 Z" fill="#D9D1C3"></path>
+    <path d="M100 148 L 105 135 C 108 130, 115 130, 118 135 L 122 155"></path>
+    <path d="M120 146 L 124 135 C 127 130, 134 130, 137 135 L 140 155"></path>
+    <path d="M138 148 L 142 140 C 145 136, 152 136, 155 140 L 158 158"></path>
+    <rect x="150" y="100" width="140" height="90" fill="#FAF5EE"></rect>
+    <path d="M150 100 L 220 155 L 290 100"></path>
+    <line x1="165" y1="120" x2="275" y2="120" stroke="#A89A8C" stroke-width="0.7"></line>
+    <line x1="165" y1="135" x2="270" y2="135" stroke="#A89A8C" stroke-width="0.7"></line>
+    <line x1="165" y1="170" x2="250" y2="170" stroke="#A89A8C" stroke-width="0.7"></line>
+  </g>
+  <circle cx="220" cy="190" r="13" fill="#B48068"></circle>
+  <text x="220" y="195" font-family="Georgia, serif" font-size="13" fill="#F1ECE4" text-anchor="middle" font-style="italic">Z</text>
+</svg>
